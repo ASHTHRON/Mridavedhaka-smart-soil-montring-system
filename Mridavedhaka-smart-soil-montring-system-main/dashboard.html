@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Mridavedhaka Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232ecc71' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <main class="main-content">
+      <header class="dashboard-header">
+        <div class="header-left">
+          <div class="device-name">
+            <h1>Mridavedhaka Dashboard</h1>
+            <span class="status-badge inactive">
+              <span class="status-dot"></span>Inactive
+            </span>
+          </div>
+          <div class="device-info">
+            <div class="info-item">
+              <span class="info-label">Auth Token:</span>
+              <span class="info-value">NdwP****2nfl</span>
+              <i class="fas fa-eye-slash toggle-token"></i>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="control-toggles">
+            <div class="toggle-control">
+              <label class="toggle-switch">
+                <input type="checkbox" id="autoModeToggle">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="autoModeLabel">MANUAL MODE</span>
+            </div>
+            <div class="toggle-control">
+              <label class="toggle-switch">
+                <input type="checkbox" id="pumpOffToggle">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="pumpToggleLabel">PUMP OFF</span>
+            </div>
+          </div>
+          <button class="logout-btn" onclick="logout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </header>
+      <div class="time-range-bar">
+        <button class="time-btn active" data-range="live">Live</button>
+        <button class="time-btn" data-range="1h">1h</button>
+        <button class="time-btn" data-range="6h">6h</button>
+        <button class="time-btn" data-range="1d">1d</button>
+        <button class="time-btn" data-range="1w">1w</button>
+        <button class="time-btn" data-range="1mo">1mo</button>
+        <button class="time-btn" data-range="3mo">3mo</button>
+        <button class="time-btn" data-range="6mo">6mo</button>
+        <button class="time-btn" data-range="1y">1y</button>
+      </div>
+      <div class="sensor-panels">
+        <div class="panel temperature-panel">
+          <div class="panel-header">
+            <div class="panel-icon temperature">
+              <i class="fas fa-temperature-high"></i>
+            </div>
+            <span class="panel-label">Temperature</span>
+          </div>
+          <div class="gauge-container">
+            <div class="gauge">
+              <svg viewBox="0 0 100 100">
+                <circle class="gauge-bg-circle" cx="50" cy="50" r="40" />
+                <circle class="gauge-fill temp-gauge" cx="50" cy="50" r="40" />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-value" id="temperature">29</span>
+                <span class="gauge-unit">°C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel humidity-panel">
+          <div class="panel-header">
+            <div class="panel-icon humidity">
+              <i class="fas fa-tint"></i>
+            </div>
+            <span class="panel-label">Humidity</span>
+          </div>
+          <div class="gauge-container">
+            <div class="gauge">
+              <svg viewBox="0 0 100 100">
+                <circle class="gauge-bg-circle" cx="50" cy="50" r="40" />
+                <circle class="gauge-fill humidity-gauge" cx="50" cy="50" r="40" />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-value" id="humidity">65</span>
+                <span class="gauge-unit">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel moisture-panel">
+          <div class="panel-header">
+            <div class="panel-icon moisture">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <span class="panel-label">Soil Moisture</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-value">
+              <span class="value" id="soilMoisture">34</span>
+              <span class="unit">%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill moisture-fill" style="width:34%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel airquality-panel">
+          <div class="panel-header">
+            <div class="panel-icon airquality">
+              <i class="fas fa-wind"></i>
+            </div>
+            <span class="panel-label">Air Quality</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-value">
+              <span class="value" id="airQuality">403.55</span>
+              <span class="unit">ppm</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill airquality-fill" style="width:40%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel motion-panel">
+          <div class="panel-header">
+            <div class="panel-icon motion">
+              <i class="fas fa-running"></i>
+            </div>
+            <span class="panel-label">Motion Detection</span>
+          </div>
+          <div class="status-display">
+            <div class="status-indicator motion-triggered" id="motionIndicator">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <span class="status-text" id="motionStatusText">Motion Triggered</span>
+          </div>
+        </div>
+        <div class="panel pump-panel">
+          <div class="panel-header">
+            <div class="panel-icon pump">
+              <i class="fas fa-faucet"></i>
+            </div>
+            <span class="panel-label">Pump Status</span>
+          </div>
+          <div class="status-display">
+            <div class="status-indicator pump-on" id="pumpIndicator">
+              <i class="fas fa-power-off"></i>
+            </div>
+            <span class="status-text" id="pumpStatusText">PUMP OFF</span>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-section">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>
+              <i class="fas fa-chart-line"></i> Sensor Data History
+            </h3>
+            <div class="chart-controls">
+              <button class="chart-btn active" data-range="24h">24 Hours</button>
+              <button class="chart-btn" data-range="7d">7 Days</button>
+              <button class="chart-btn" data-range="30d">30 Days</button>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="mainChart"></canvas>
+          </div>
+        </div>
+        <div class="api-card">
+          <div class="api-header">
+            <h3>
+              <i class="fas fa-cloud-upload-alt"></i> Device Data
+            </h3>
+            <button class="refresh-btn" onclick="refreshData()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+          <div class="api-stats">
+            <div class="api-stat">
+              <div class="api-stat-label">API Status</div>
+              <div class="api-stat-value" id="apiStatus">Active</div>
+            </div>
+            <div class="api-stat">
+              <div class="api-stat-label">Last Sync</div>
+              <div class="api-stat-value" id="lastSync">Just now</div>
+            </div>
+          </div>
+          <div class="device-stats">
+            <div class="device-stat">
+              <span class="stat-label">Uptime</span>
+              <span class="stat-value" id="uptime">24h 15m</span>
+            </div>
+            <div class="device-stat">
+              <span class="stat-label">Data Points</span>
+              <span class="stat-value" id="dataPoints">1,847</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
+
